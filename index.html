@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Trainer Consultation Form - Part 1</title>
+    <title>Personal Trainer Consultation Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -70,19 +70,44 @@
                 flex: 1 1 100%;
             }
         }
+        .success-message {
+            text-align: center;
+            color: green;
+            font-weight: 700;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>New Client Form</h1>
-        <form action="https://formspree.io/f/xwppwqbq" method="POST">
+        <form action="https://formspree.io/f/xwppwqbq" method="POST" id="clientForm">
             <!-- Personal Information -->
             <div class="section-title">Personal Information</div>
             <label for="fullName">Full Name:</label>
             <input type="text" id="fullName" name="fullName" required>
 
             <label for="dob">Date of Birth:</label>
-            <input type="text" id="dob" name="dob" placeholder="YYYY-MM-DD" required>
+<input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" maxlength="10" required>
+
+<script>
+    const dobInput = document.getElementById('dob');
+
+    dobInput.addEventListener('input', function (e) {
+        // Get the current value and remove all non-digit characters
+        let value = e.target.value.replace(/\D/g, '');
+        
+        // Format the input as DD/MM/YYYY
+        if (value.length >= 3 && value.length <= 4) {
+            value = value.slice(0, 2) + '/' + value.slice(2);
+        } else if (value.length >= 5) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
+        }
+        
+        // Update the input value, limiting it to 10 characters
+        e.target.value = value.slice(0, 10);
+    });
+</script>
 
             <div class="flex-group">
                 <div>
@@ -128,102 +153,7 @@
             <label for="goals">What are your primary fitness goals?</label>
             <textarea id="goals" name="goals" placeholder="E.g., Weight loss, muscle gain, etc." required></textarea>
 
-            <label for="shortTermGoal">What is your short term goal?</label>
-            <textarea id="shortTermGoal" name="shortTermGoal" required></textarea>
-
-            <label for="longTermGoal">What is your long term goal?</label>
-            <textarea id="longTermGoal" name="longTermGoal" required></textarea>
-
-            <label for="motivation">What motivates you to work towards your goals?</label>
-            <textarea id="motivation" name="motivation" required></textarea>
-
-            <label for="barriers">Is there anything stopping you from reaching your goals?</label>
-            <textarea id="barriers" name="barriers" required></textarea>
-
-            <label for="occupation">What is your occupation?</label>
-            <input type="text" id="occupation" name="occupation" required>
-
-            <label for="activityLevel">How would you describe your current activity level?</label>
-            <select id="activityLevel" name="activityLevel" required>
-                <option value="Sedentary">Sedentary</option>
-                <option value="Lightly active">Lightly active</option>
-                <option value="Moderately active">Moderately active</option>
-                <option value="Very active">Very active</option>
-            </select>
-
-            <label for="diet">Do you follow a specific diet or eating pattern? If yes, please describe:</label>
-            <textarea id="diet" name="diet"></textarea>
-
-            <label for="commitment">On a scale of 1 to 10, how committed are you to achieving your goals?</label>
-            <input type="number" id="commitment" name="commitment" min="1" max="10" required>
-                   <!-- Exercise History -->
-            <div class="section-title">Exercise History</div>
-            <label for="exercise">Do you currently exercise?</label>
-            <select id="exercise" name="exercise" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
-
-            <label for="exerciseDetails">If yes, what type of exercise do you currently do and how often?</label>
-            <textarea id="exerciseDetails" name="exerciseDetails"></textarea>
-
-            <label for="trainerExperience">Have you worked with a personal trainer before?</label>
-            <select id="trainerExperience" name="trainerExperience" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
-
-            <label for="likesDislikes">Are there any exercises you enjoy or dislike?</label>
-            <textarea id="likesDislikes" name="likesDislikes"></textarea>
-
-            <label for="sports">Do you participate in any sports or recreational activities?</label>
-            <textarea id="sports" name="sports"></textarea>
-
-            <!-- Health Information -->
-            <div class="section-title">Health Information</div>
-            <label for="health">Do you have any current injuries, illnesses, or medical conditions?</label>
-            <textarea id="health" name="health" required></textarea>
-
-            <label for="limitations">Do you have any physical limitations or chronic pain?</label>
-            <textarea id="limitations" name="limitations"></textarea>
-
-            <label for="medications">Are you currently taking any medications?</label>
-            <textarea id="medications" name="medications"></textarea>
-
-            <label for="medicalHistory">Do you have a history of medical conditions? (E.g., Heart Disease, Diabetes, etc.):</label>
-            <textarea id="medicalHistory" name="medicalHistory" placeholder="E.g., Heart disease, Diabetes, etc."></textarea>
-
-            <label for="physicianClearance">Have you been cleared by a physician to exercise?</label>
-            <select id="physicianClearance" name="physicianClearance" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not applicable">Not applicable</option>
-            </select>
-
-            <!-- Preferences -->
-            <div class="section-title">Preferences</div>
-            <label for="trainingTime">Preferred training times:</label>
-            <select id="trainingTime" name="trainingTime" required>
-                <option value="Morning">Morning</option>
-                <option value="Afternoon">Afternoon</option>
-                <option value="Evening">Evening</option>
-                <option value="Weekdays">Weekdays</option>
-                <option value="Weekends">Weekends</option>
-            </select>
-
-            <label for="trainingPreference">Do you prefer one-on-one or group training?</label>
-            <select id="trainingPreference" name="trainingPreference" required>
-                <option value="One-on-one">One-on-one</option>
-                <option value="Group training">Group training</option>
-            </select>
-
-            <label for="sessionsPerWeek">How many sessions per week are you planning to commit to?</label>
-            <input type="number" id="sessionsPerWeek" name="sessionsPerWeek" required>
-
-            <label for="additionalInfo">Is there anything else you'd like your trainer to know?</label>
-            <textarea id="additionalInfo" name="additionalInfo"></textarea>
-
-         <!-- Waiver and Submit -->
+            <!-- Waiver and Submit -->
             <div>
                 <input type="checkbox" id="waiver" name="waiver" required>
                 <label for="waiver">I certify that the information provided above is accurate and complete to the best of my knowledge.</label>
@@ -231,13 +161,37 @@
 
             <button type="submit">Submit</button>
         </form>
-    </div>
-</body>
-</html>
 
-
-            <button type="submit">Submit</button>
-        </form>
+        <div class="success-message" id="successMessage" style="display:none;">
+            Thank you! Your submission has been received.
+        </div>
     </div>
+
+    <script>
+        const form = document.getElementById('clientForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    form.reset(); // Reset the form
+                } else {
+                    alert('There was an issue submitting your form. Please try again later.');
+                }
+            }).catch(error => {
+                alert('There was an issue submitting your form. Please check your internet connection.');
+            });
+        });
+    </script>
 </body>
 </html>
